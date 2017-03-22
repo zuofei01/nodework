@@ -1,0 +1,11 @@
+{
+  "name": "circlezyf",
+  "version": "1.0.0",
+  "description": "the tool to calculate the area of circle",
+  "main": "circle.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zyf",
+  "license": "ISC"
+}
