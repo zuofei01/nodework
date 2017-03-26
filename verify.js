@@ -7,7 +7,7 @@ function checkSignature(params, token){
     var key = [token, params.timestamp, params.nonce].sort().join('');
     var sha1 = require('crypto').createHash('sha1');
     sha1.update(key);
-    return  sha1.digest('hex') == params.signature;
+    return  sha1.digest('hex') == params.signature;  //验证签名
 }
 
 var server = http.createServer(function (request, response) {
@@ -37,7 +37,7 @@ var server = http.createServer(function (request, response) {
 
             parseStrnig(postdata,{explicitArray : false},function (err, result) {
                 if(!err){
-                    //我们将XML数据通过xml2js模块(npm install xml2js)解析成json格式
+                    //将XML数据通过xml2js模块(npm install xml2js)解析成json格式
                     console.log(result);
                     response.end('success');
                 }

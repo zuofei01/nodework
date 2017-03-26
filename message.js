@@ -7,7 +7,7 @@ var TOKEN = 'sskpuzyf';
 var feedback;
 var reJSON;
 var m_from_user_name;
-function checkSignature(params, token) {
+function checkSignature(params, token) {  //验证签名和token
     var key = [token, params.timestamp, params.nonce].sort().join('');
     var sha1 = require('crypto').createHash('sha1');
     sha1.update(key);
@@ -31,7 +31,7 @@ var server = http.createServer(function (request, response) {
         //     console.log(postdata);
         //     response.end('success');
         // });
-        request.addListener("end", function () {
+        request.addListener("end", function () {   //接收到的数据
             var parseString = require('xml2js').parseString;
             var jsonStr = parseString(postdata, {explicitArray: false}, function (err, result) {
                 if (!err) {
@@ -42,7 +42,7 @@ var server = http.createServer(function (request, response) {
             });
         });
 
-        function handleData(msg) {
+        function handleData(msg) { //从解析完成的json中获取内容，将内容取相反数之后封装成json后调用https.request将结果返回回去
             var content = msg.xml.Content;
             m_from_user_name = msg.xml.FromUserName;
             var num = parseInt(content);
@@ -50,7 +50,7 @@ var server = http.createServer(function (request, response) {
             console.log(m_from_user_name);
             console.log(feedback);
 
-            reJSON = {
+            reJSON = {  //f封装返回的json
                 "touser": m_from_user_name,
                 "msgtype": "text",
                 "text": {
@@ -60,7 +60,7 @@ var server = http.createServer(function (request, response) {
             }
             var post_str = new Buffer(JSON.stringify(reJSON));
             var access_token = readAccessToken();
-            var post_options = {
+            var post_options = {  //返回的参数的选项配置
                 host: 'api.weixin.qq.com',
                 port: '443',
                 path: '/cgi-bin/message/custom/send?access_token=' + access_token,
@@ -90,7 +90,7 @@ var server = http.createServer(function (request, response) {
 });
 function readAccessToken()
 {
-    var data = fs.readFileSync('/usr/bin/nodejsaccess_token.txt', 'utf8');
+    var data = fs.readFileSync('/usr/bin/nodejsaccess_token.txt', 'utf8'); //从文件中读取accesstoken
     console.log(data);
     return data;
 }

@@ -15,10 +15,6 @@ console.log(next);
 
 var timer = later.setInterval(test, sched);
 setTimeout(test, 2000);
-function abcd() {
-    console.log("1234567890");
-
-}
 
 function test() {
     console.log(new Date());
@@ -36,12 +32,12 @@ function test() {
         res.on('end', function () {
             var body = JSON.parse(bodyChunks);
             //console.dir(body);
-            if (body.access_token) {
+            if (body.access_token) {  //   从json中获取access token
                 access_token = body.access_token;
                 //saveAccessToken(access_token);
                 console.log(access_token);
 
-                fs.writeFile(process.execPath + "access_token.txt",access_token, function(err) {
+                fs.writeFile(process.execPath + "access_token.txt",access_token, function(err) {  //调用fs模块将获取到的access token写入文件中
                     if(err) {
                         return console.log(err);
                     }
